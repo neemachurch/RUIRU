@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Giving - Neema Gospel Church</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---- PAGE ANIMATION ---- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- HERO SECTION ---- */
+    .giving-hero {
+      height: 85vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+                  url('giving-bg.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      color: white;
+    }
+
+    .giving-hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .giving-hero p {
+      max-width: 600px;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* ---- ANIMATED GIVE BUTTON ---- */
+    .give-now-btn {
+      margin-top: 35px;
+      padding: 16px 40px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff9900, #ff5500);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 15px rgba(255,120,0,0.6);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .give-now-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(255,90,0,0.9);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    /* ---- MOBILE FIXES ---- */
+    @media (max-width: 600px) {
+      .giving-hero h1 { font-size: 30px; }
+      .giving-hero p { font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-area">
+    <img src="logo.png" class="logo" alt="Neema Logo">
+    <span class="church-name">Neema Gospel Church</span>
+  </div>
+
+  <nav>
+    <div class="menu-icon" id="menuToggle">&#9776;</div>
+
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="ministries.html">Ministries</a>
+      <a href="events.html">Events</a>
+      <a href="sermons.html">Sermons</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="livestream.html">Livestream</a>
+      <a href="newhere.html">New Here?</a>
+      <a href="contact.html">Contact</a>
+      <a href="giving.html" class="give-btn active">Give</a>
+    </div>
+  </nav>
+</header>
+
+
+<!-- HERO SECTION -->
+<section class="giving-hero fade-in">
+  <h1>Support God's Work</h1>
+  <p>Your generosity enables us to reach more people, serve the community, and spread the Gospel of Jesus Christ.</p>
+
+  <a href="https://church-mpesa-c2b.onrender.com/pay" 
+     target="_blank"
+     class="give-now-btn">
+     Give Now
+  </a>
+</section>
+
+
+<!-- ===========================
+      FOOTER
+=========================== -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <h3>Neema Gospel Church</h3>
+      <p>A Christ-centered ministry transforming lives through the Word of God.</p>
+
+      <div class="newsletter-box">
+        <h4>Subscribe to Updates</h4>
+        <p>Get church announcements & devotionals.</p>
+
+        <a href="https://forms.microsoft.com/r/XtHcffGWjg?origin=lprLink"
+   target="_blank"
+   class="btn primary">
+   Subscribe to Updates
+</a>
+
+        <p id="newsletterResponse" class="newsletter-response"></p>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="ministries.html">Ministries</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="sermons.html">Sermons</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="livestream.html">Livestream</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Ministries</h4>
+      <ul>
+        <li><a href="ministries.html">Worship Team</a></li>
+        <li><a href="ministries.html">Youth Ministry</a></li>
+        <li><a href="ministries.html">Children's Ministry</a></li>
+        <li><a href="ministries.html">Men's Fellowship</a></li>
+        <li><a href="ministries.html">Women's Fellowship</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>Ruiru, Kenya</p>
+      <p>Phone: (254) 701 842 755</p>
+      <p>Email: neemagospelchurchruiru@outlook.com</p>
+
+      <div class="socials">
+        <a class="social-icon fb" href="#" target="_blank">f</a>
+        <a class="social-icon ig" href="#" target="_blank">♛</a>
+        <a class="social-icon yt" href="https://youtube.com/@ngc254" target="_blank">▶</a>
+        <a class="social-icon wa" href="#" target="_blank">✆</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © <span id="currentYear"></span> Neema Gospel Church Ruiru— All Rights Reserved.
+  </div>
+</footer>
