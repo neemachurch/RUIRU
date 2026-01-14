@@ -588,17 +588,24 @@
       }
 
       async function refresh(){
-        try{
-          if (!API_KEY || !API_KEY.startsWith("AIza")) {
-            showOffline("AIza");
-            return;
-          }
+  try{
+    if (!API_KEY || !API_KEY.startsWith("AIza")) {
+      showOffline("Missing API key");
+      return;
+    }
 
-          setBadge(false, "Checking live status…");
-          const liveVideoId = await getLiveVideoId();
+    setBadge(false, "Checking live status…");
 
-          if (liveVideoId) showLive(EncIRX_uuIA);
-          else showOffline("Offline");
+    const liveVideoId = await getLiveVideoId();
+
+    if (liveVideoId) showLive(liveVideoId);
+    else showOffline("Offline");
+
+  } catch (e){
+    console.error("API check failed:", e);
+    showOffline("Offline (API check failed)");
+  }
+}
 
         } catch (e){
           // Common reasons: quota exceeded, key restricted wrongly, network error
@@ -622,5 +629,6 @@
   </script>
 </body>
 </html>
+
 
 
