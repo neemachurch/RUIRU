@@ -513,122 +513,112 @@
   </footer>
 
   <script>
-    /* =========================
-       MENU + YEAR
-    ========================== */
-    document.addEventListener("DOMContentLoaded", () => {
-      const menuToggle = document.getElementById("menuToggle");
-      const navLinks = document.getElementById("navLinks");
-      if (menuToggle && navLinks) {
-        menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
-      }
-      const y = document.getElementById("currentYear");
-      if (y) y.textContent = new Date().getFullYear();
-    });
+  // MENU + YEAR
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
+    }
+    const y = document.getElementById("currentYear");
+    if (y) y.textContent = new Date().getFullYear();
+  });
 
-    /* =========================
-       LIVESTREAM LIVE/OFFLINE (REAL)
-       Uses YouTube Data API v3
-    ========================== */
-    document.addEventListener("DOMContentLoaded", () => {
-      const CHANNEL_ID = "UCoVIa3ZXcRl3OqG6V10juOA";
+  // LIVESTREAM LIVE/OFFLINE (YouTube Data API)
+  document.addEventListener("DOMContentLoaded", () => {
+    const CHANNEL_ID = "UCYJVIThrcvGL22xu-q3I_FQ";
+    const API_KEY = "AIzaSyDIu9Voj_d6LQXKmdbL48RgcjhSxG3KSsw";
 
-      // ✅ Put your YouTube Data API Key here
-      const API_KEY = "AIzaSyDIu9Voj_d6LQXKmdbL48RgcjhSxG3KSsw";
+    const liveStatus    = document.getElementById("liveStatus");
+    const liveLabel     = document.getElementById("liveLabel");
+    const liveIVEContainer = document.getElementById("liveContainer");
+    const iframe        = document.getElementById("ytLive");
+    const offlineThumb  = document.getElementById("offlineThumb");
+    const liveBtn       = document.getElementById("liveActionBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const videoFrame    = document.getElementById("videoFrame");
 
-      const liveStatus    = document.getElementById("liveStatus");
-      const liveLabel     = document.getElementById("liveLabel");
-      const liveContainer = document.getElementById("liveContainer");
-      const iframe        = document.getElementById("ytLive");
-      const offlineThumb  = document.getElementById("offlineThumb");
-      const liveBtn       = document.getElementById("liveActionBtn");
-      const fullscreenBtn = document.getElementById("fullscreenBtn");
-      const videoFrame    = document.getElementById("videoFrame");
+    // ✅ Fix typo here: liveContainer variable name
+    const liveContainer = document.getElementById("liveContainer");
 
-      if (!liveStatus || !liveLabel || !liveContainer || !offlineThumb || !liveBtn || !iframe) return;
+    if (!liveStatus || !liveLabel || !liveContainer || !offlineThumb || !liveBtn || !iframe) return;
 
-      function setBadge(isLive, text){
-        liveStatus.classList.toggle("live", isLive);
-        liveStatus.classList.toggle("offline", !isLive);
-        liveLabel.textContent = text || (isLive ? "LIVE NOW" : "Offline");
-      }
-
-      async function getLiveVideoId(){
-        const url =
-          "https://www.googleapis.com/youtube/v3/search" +
-          `?part=snippet&channelId=${encodeURIComponent(CHANNEL_ID)}` +
-          `&eventType=live&type=video&maxResults=1&key=${encodeURIComponent(API_KEY)}`;
-
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("YouTube API failed");
-        const data = await res.json();
-        const item = data.items && data.items[0];
-        return item && item.id && item.id.videoId ? item.id.videoId : null;
-      }
-
-      function showLive(videoId){
-        setBadge(true, "LIVE NOW");
-        offlineThumb.style.display = "none";
-        liveContainer.style.display = "block";
-
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-
-        liveBtn.textContent = "Open Live on YouTube";
-        liveBtn.href = `https://www.youtube.com/watch?v=${videoId}`;
-      }
-
-      function showOffline(message){
-        setBadge(false, message || "Offline");
-        liveContainer.style.display = "none";
-        offlineThumb.style.display = "block";
-        iframe.src = "";
-
-        liveBtn.textContent = "Go to YouTube Channel";
-        liveBtn.href = "https://www.youtube.com/@ngc254";
-      }
-
-      async function refresh(){
-  try{
-    if (!API_KEY || !API_KEY.startsWith("AIza")) {
-      showOffline("Missing API key");
-      return;
+    function setBadge(isLive, text) {
+      liveStatus.classList.toggle("live", isLive);
+      liveStatus.classList.toggle("offline", !isLive);
+      liveLabel.textContent = text || (isLive ? "LIVE NOW" : "Offline");
     }
 
-    setBadge(false, "Checking live status…");
+    async function getLiveVideoId() {
+      const url =
+        "https://www.googleapis.com/youtube/v3/search" +
+        `?part=snippet&channelId=${encodeURIComponent(CHANNEL_ID)}` +
+        `&eventType=live&type=video&maxResults=1&key=${encodeURIComponent(API_KEY)}`;
 
-    const liveVideoId = await getLiveVideoId();
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("YouTube API failed: " + res.status);
+      const data = await res.json();
+      const item = data.items && data.items[0];
+      return item && item.id && item.id.videoId ? item.id.videoId : null;
+    }
 
-    if (liveVideoId) showLive(liveVideoId);
-    else showOffline("Offline");
+    function showLive(videoId) {
+      setBadge(true, "LIVE NOW");
+      offlineThumb.style.display = "none";
+      liveContainer.style.display = "block";
 
-  } catch (e){
-    console.error("API check failed:", e);
-    showOffline("Offline (API check failed)");
-  }
-}
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
 
-        } catch (e){
-          // Common reasons: quota exceeded, key restricted wrongly, network error
-          showOffline("Offline (API check failed)");
+      liveBtn.textContent = "Open Live on YouTube";
+      liveBtn.href = `https://www.youtube.com/watch?v=${videoId}`;
+    }
+
+    function showOffline(message) {
+      setBadge(false, message || "Offline");
+      liveContainer.style.display = "none";
+      offlineThumb.style.display = "block";
+      iframe.src = "";
+
+      liveBtn.textContent = "Go to YouTube Channel";
+      liveBtn.href = "https://www.youtube.com/@ngc254";
+    }
+
+    async function refresh() {
+      try {
+        if (!API_KEY || !API_KEY.startsWith("AIza")) {
+          showOffline("Invalid API key");
+          return;
         }
-      }
 
-      // Fullscreen (user click required)
-      if (fullscreenBtn && videoFrame){
-        fullscreenBtn.addEventListener("click", () => {
-          if (videoFrame.requestFullscreen) videoFrame.requestFullscreen();
-          else if (videoFrame.webkitRequestFullscreen) videoFrame.webkitRequestFullscreen();
-          else if (videoFrame.msRequestFullscreen) videoFrame.msRequestFullscreen();
-        });
-      }
+        setBadge(false, "Checking live status…");
 
-      // Run now + refresh every 60 seconds
-      refresh();
-      setInterval(refresh, 60000);
-    });
-  </script>
+        const liveVideoId = await getLiveVideoId();
+
+        if (liveVideoId) showLive(liveVideoId);
+        else showOffline("Offline");
+
+      } catch (e) {
+        console.error("API check failed:", e);
+        showOffline("Offline (API check failed)");
+      }
+    }
+
+    if (fullscreenBtn && videoFrame) {
+      fullscreenBtn.addEventListener("click", () => {
+        if (videoFrame.requestFullscreen) videoFrame.requestFullscreen();
+        else if (videoFrame.webkitRequestFullscreen) videoFrame.webkitRequestFullscreen();
+        else if (videoFrame.msRequestFullscreen) videoFrame.msRequestFullscreen();
+      });
+    }
+
+    refresh();
+    setInterval(refresh, 60000);
+  });
+</script>
+
 </body>
 </html>
+
 
 
 
